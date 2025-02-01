@@ -20,29 +20,39 @@
 //     }
 // });
 
+const API_URL = "https://shield-chain-backend.vercel.app/api/scan"; // Replace with your deployed Vercel API URL
+
 document.getElementById("scanButton").addEventListener("click", async () => {
     const contractCode = document.getElementById("contractCode").value;
     const analysisOutput = document.getElementById("analysisOutput");
     const downloadButton = document.getElementById("downloadPdfButton");
 
     if (!contractCode.trim()) {
-        alert("Please enter Solidity contract code.");
+        alert("⚠️ Please enter Solidity contract code.");
         return;
     }
 
+    // Show loading state
+    analysisOutput.textContent = "🔄 Analyzing smart contract...";
+    downloadButton.classList.add("hidden");
+
     try {
-        const response = await fetch("http://localhost:5000/scan", { // Backend URL
+        const response = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ contractCode })
         });
+
+        if (!response.ok) {
+            throw new Error("Server responded with an error.");
+        }
 
         const result = await response.json();
         analysisOutput.textContent = JSON.stringify(result, null, 2);
         downloadButton.classList.remove("hidden"); // Show Download PDF Button
 
     } catch (error) {
-        analysisOutput.textContent = "Error scanning contract.";
+        analysisOutput.textContent = "❌ Error scanning contract.";
         downloadButton.classList.add("hidden");
     }
 });
@@ -54,11 +64,11 @@ document.getElementById("downloadPdfButton").addEventListener("click", () => {
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
-    doc.text("🛡️ ShieldChain - Security Report", 20, 20);
+    doc.text("🛡️ ShieldChain - AI Security Report", 20, 20);
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
-    doc.text("Analysis Result:", 20, 30);
+    doc.text("🔍 Analysis Result:", 20, 30);
 
     const analysisOutput = document.getElementById("analysisOutput").textContent;
     const splitText = doc.splitTextToSize(analysisOutput, 180);
