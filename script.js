@@ -49,8 +49,11 @@ document.getElementById("scanButton").addEventListener("click", async () => {
 
         const result = await response.json();
 
-        // Convert response JSON into a pretty-printed format for display
-        const formattedResult = JSON.stringify(result, null, 4);
+        // Extract only safety ratings from the response
+        const safetyRatings = result.safetyRatings || [];
+
+        // Format the extracted safety ratings for display
+        const formattedResult = JSON.stringify(safetyRatings, null, 4);
 
         // Display result in the webpage
         analysisOutput.textContent = formattedResult;
@@ -64,16 +67,16 @@ document.getElementById("scanButton").addEventListener("click", async () => {
     }
 });
 
-// PDF Generation
+// PDF Generation (Only Safety Ratings)
 document.getElementById("downloadPdfButton").addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    doc.setFont("courier", "normal"); // Use a monospaced font for better JSON readability
+    doc.setFont("courier", "normal"); // Monospaced font for better readability
     doc.setFontSize(10);
 
     doc.text("🛡️ ShieldChain - AI Security Report", 20, 20);
-    doc.text("🔍 Analysis Result:", 20, 30);
+    doc.text("🔍 Safety Ratings:", 20, 30);
 
     const analysisOutput = document.getElementById("analysisOutput").textContent;
     
