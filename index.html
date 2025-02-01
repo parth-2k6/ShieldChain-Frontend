@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldChain - AI Smart Contract Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-2xl p-6 bg-gray-800 shadow-lg rounded-lg">
+        <h1 class="text-3xl font-bold text-blue-400 text-center">🛡️ ShieldChain</h1>
+        <p class="text-gray-300 text-center mt-2">Analyze your Solidity smart contract for vulnerabilities</p>
+
+        <textarea id="contractCode" placeholder="Paste Solidity code here..." 
+            class="w-full h-40 mt-4 p-3 bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </textarea>
+
+        <button id="scanButton" 
+            class="w-full mt-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded transition duration-300">
+            Scan Contract
+        </button>
+
+        <h3 class="mt-6 text-lg font-semibold text-blue-400">🔍 AI Security Report:</h3>
+        <pre id="analysisOutput" class="mt-2 p-3 bg-gray-700 border border-gray-600 rounded text-green-400 overflow-auto h-32"></pre>
+
+        <button id="downloadPdfButton" 
+            class="w-full mt-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded transition duration-300 hidden">
+            Download Report as PDF
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
