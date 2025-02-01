@@ -22,7 +22,6 @@
 
 const API_URL = "https://shield-chain-backend.vercel.app/api/scan"; // Replace with your deployed Vercel API URL
 
-
 document.getElementById("scanButton").addEventListener("click", async () => {
     const contractCode = document.getElementById("contractCode").value;
     const analysisOutput = document.getElementById("analysisOutput");
@@ -50,11 +49,14 @@ document.getElementById("scanButton").addEventListener("click", async () => {
 
         const result = await response.json();
 
-        // Extract vulnerabilities from the AI response
-        let vulnerabilities = result?.vulnerabilities || "No vulnerabilities found.";
-        
-        analysisOutput.textContent = JSON.stringify(vulnerabilities, null, 2);
-        downloadButton.classList.remove("hidden"); // Show Download PDF Button
+        // Convert response JSON into a pretty-printed format for display
+        const formattedResult = JSON.stringify(result, null, 4);
+
+        // Display result in the webpage
+        analysisOutput.textContent = formattedResult;
+
+        // Show Download PDF Button
+        downloadButton.classList.remove("hidden");
 
     } catch (error) {
         analysisOutput.textContent = "❌ Error scanning contract.";
@@ -67,18 +69,18 @@ document.getElementById("downloadPdfButton").addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.text("🛡️ ShieldChain - AI Security Report", 20, 20);
+    doc.setFont("courier", "normal"); // Use a monospaced font for better JSON readability
+    doc.setFontSize(10);
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
+    doc.text("🛡️ ShieldChain - AI Security Report", 20, 20);
     doc.text("🔍 Analysis Result:", 20, 30);
 
     const analysisOutput = document.getElementById("analysisOutput").textContent;
+    
+    // Split text into multiple lines to fit in the PDF
     const splitText = doc.splitTextToSize(analysisOutput, 180);
+    
     doc.text(splitText, 20, 40);
 
     doc.save("ShieldChain_Security_Report.pdf");
 });
-
