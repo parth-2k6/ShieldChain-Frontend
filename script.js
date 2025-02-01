@@ -22,6 +22,7 @@
 
 const API_URL = "https://shield-chain-backend.vercel.app/api/scan"; // Replace with your deployed Vercel API URL
 
+
 document.getElementById("scanButton").addEventListener("click", async () => {
     const contractCode = document.getElementById("contractCode").value;
     const analysisOutput = document.getElementById("analysisOutput");
@@ -48,7 +49,11 @@ document.getElementById("scanButton").addEventListener("click", async () => {
         }
 
         const result = await response.json();
-        analysisOutput.textContent = JSON.stringify(result, null, 2);
+
+        // Extract vulnerabilities from the AI response
+        let vulnerabilities = result?.vulnerabilities || "No vulnerabilities found.";
+        
+        analysisOutput.textContent = JSON.stringify(vulnerabilities, null, 2);
         downloadButton.classList.remove("hidden"); // Show Download PDF Button
 
     } catch (error) {
@@ -76,3 +81,4 @@ document.getElementById("downloadPdfButton").addEventListener("click", () => {
 
     doc.save("ShieldChain_Security_Report.pdf");
 });
+
