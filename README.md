@@ -1,4 +1,4 @@
-ShieldChain is an AI-powered smart contract security scanner for an automatic vulnerability scan for smart contracts in terms of Solidity in a blockchain environment. ShieldChain performs security audits with Slither and Google Gemini AI and creates real-time reports for minimizing hacks and frauds.
+ShieldChain is an AI-powered smart contract security scanner for an automatic vulnerability scan for smart contracts in terms of Solidity in a blockchain environment. ShieldChain performs security audits with Slither and AI and creates real-time reports for minimizing hacks and frauds.
 
 Updated Features
 ✔ AI-Powered Security Analysis – Uses Google Gemini AI to scan for vulnerabilities and assess security in contracts
